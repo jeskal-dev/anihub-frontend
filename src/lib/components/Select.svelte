@@ -1,12 +1,18 @@
 <script lang="ts">
-	import { onMount, type Snippet } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import { computePosition, offset as floatingOffset, autoUpdate } from '@floating-ui/dom';
 	import cn from '$lib/helpers/classnames';
 	import { parseStyles } from '$lib/helpers/parseStyles';
+	import {
+		autoUpdate,
+		computePosition,
+		offset as floatingOffset,
+		shift,
+		type Placement
+	} from '@floating-ui/dom';
+	import { type Snippet } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	interface TriggerProps {
-		close: () => void;
+		toggle: () => void;
 		isOpen: boolean;
 	}
 
@@ -15,7 +21,7 @@
 	}
 
 	interface Props {
-		placement?: 'top' | 'bottom' | 'left' | 'right';
+		placement?: Placement;
 		offsetValue?: number;
 		className?: string;
 		trigger: Snippet<[TriggerProps]>;
@@ -36,7 +42,7 @@
 			const { x, y } = await computePosition(referenceEl, floatingEl, {
 				placement,
 				strategy: 'absolute',
-				middleware: [floatingOffset(5 + offsetValue)]
+				middleware: [floatingOffset(offsetValue), shift()]
 			});
 			floatingStyles = {
 				left: `${x}px`,
@@ -73,9 +79,9 @@
 
 <svelte:document onclick={handleDocumentClick} />
 <div>
-	<button class="h-fit w-fit appearance-none" bind:this={referenceEl} onclick={toggle}>
-		{@render trigger({ close, isOpen })}
-	</button>
+	<div class="h-fit w-fit appearance-none" bind:this={referenceEl}>
+		{@render trigger({ toggle, isOpen })}
+	</div>
 
 	<!-- Menú flotante: se muestra si isOpen es true -->
 	{#if isOpen}

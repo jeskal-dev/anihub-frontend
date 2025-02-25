@@ -1,7 +1,14 @@
 <script lang="ts">
-	import type { LayoutProps } from '../$types';
+	import Footer from '$lib/ui/Footer.svelte';
+	import Header from '$lib/ui/Header/Header.svelte';
 
-	let { children }: LayoutProps = $props();
+	let { children } = $props();
 </script>
 
-{@render children()}
+<Header />
+
+<main>
+	{@render children()}
+</main>
+
+<Footer />

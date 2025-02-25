@@ -6,7 +6,6 @@
 	import { withPrevent } from '$lib/helpers/withPrevent.js';
 	import { registerForm } from '$lib/services/auth.js';
 	import { Motion } from 'svelte-motion';
-	import SuperDebug from 'sveltekit-superforms';
 
 	const FIELD_LABELS: Record<keyof RegisterSchema, string> = {
 		username: 'Nombre de usuario',
