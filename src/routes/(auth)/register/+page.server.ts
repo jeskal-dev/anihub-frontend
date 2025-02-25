@@ -4,6 +4,8 @@ import { error } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
+export const ssr = true;
+
 export const load = async () => {
 	const form = await superValidate(zod(registerSchema));
 	return { form };
@@ -12,7 +14,7 @@ export const load = async () => {
 export const actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(registerSchema));
-
+		console.log(form);
 		if (!form.valid)
 			return error(400, {
 				message: 'Formulario invalido'
@@ -22,6 +24,8 @@ export const actions = {
 			await Auth.register(form.data);
 			return { form };
 		} catch (err) {
+			console.log(err);
+
 			return error(400, err as Error);
 		}
 	}

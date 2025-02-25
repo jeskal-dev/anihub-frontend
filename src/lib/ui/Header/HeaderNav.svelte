@@ -5,9 +5,6 @@
 	import cn from '$lib/helpers/classnames';
 	import authStore from '$lib/stores/authStore';
 	import { ChevronDown } from 'lucide-svelte';
-	import { derived } from 'svelte/store';
-
-	let isAuthenticated = derived(authStore, ($auth) => $auth.isAuthenticated);
 </script>
 
 {#snippet dropdown({ name, subLinks = [] }: Partial<NavLink>)}
@@ -36,7 +33,7 @@
 {/snippet}
 
 <div class="hidden flex-grow items-center justify-center gap-6 md:flex">
-	{#each renderNavLinks($isAuthenticated) as link}
+	{#each renderNavLinks($authStore.isAuthenticated) as link}
 		{#if link.subLinks}
 			{@render dropdown(link)}
 		{:else}

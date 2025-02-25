@@ -11,7 +11,8 @@ const http = axios.create({
 	timeout: 10000,
 	headers: {
 		'Content-Type': 'application/json'
-	}
+	},
+	proxy: false
 });
 
 http.interceptors.request.use((config) => {

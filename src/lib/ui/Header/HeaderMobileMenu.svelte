@@ -1,14 +1,14 @@
 <script lang="ts">
-	import HeaderLink from './HeaderLink.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { renderNavLinks, type NavLink } from '$lib/constants/navigation-links';
 	import authStore from '$lib/stores/authStore';
 	import { AnimatePresence, Motion } from 'svelte-motion';
-	import { derived, get } from 'svelte/store';
 	import UserActions from '../User/UserActions.svelte';
+	import HeaderLink from './HeaderLink.svelte';
+	import { derived } from 'svelte/store';
 
 	let { show = false } = $props();
-	let isAuthenticated = derived(authStore, ($auth) => $auth.isAuthenticated);
+	const isAuth = derived(authStore, ($auth) => $auth.isAuthenticated);
 </script>
 
 {#snippet group({ name, subLinks = [] }: Partial<NavLink>)}
@@ -31,7 +31,7 @@
 	>
 		<section use:motion class="absolute w-full bg-neutral-900 shadow-lg md:hidden">
 			<div class="container mx-auto w-full space-y-4 p-4">
-				{#each renderNavLinks($isAuthenticated) as navLink}
+				{#each renderNavLinks($isAuth) as navLink}
 					{#if navLink.subLinks}
 						{@render group(navLink)}
 					{:else}
@@ -39,7 +39,7 @@
 					{/if}
 				{/each}
 			</div>
-			{#if $isAuthenticated}
+			{#if $isAuth}
 				<UserActions />
 			{:else}
 				<div class="flex flex-col gap-2">

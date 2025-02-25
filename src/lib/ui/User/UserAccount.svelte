@@ -10,7 +10,7 @@
 <Select offsetValue={10} placement="bottom">
 	{#snippet trigger({ toggle })}
 		<button
-			class="flex items-center space-x-2 rounded-md p-2 transition-colors hover:bg-neutral-800"
+			class="flex cursor-pointer items-center space-x-2 rounded-md p-2 transition-colors hover:bg-neutral-800"
 			onclick={toggle}
 		>
 			<picture class="h-8 w-8 overflow-hidden rounded-full object-cover">
@@ -21,7 +21,7 @@
 				/>
 			</picture>
 			<span class="hidden font-medium text-white md:flex">
-				{$user?.displayName}
+				{$user?.displayName ?? $user?.username}
 			</span>
 		</button>
 	{/snippet}

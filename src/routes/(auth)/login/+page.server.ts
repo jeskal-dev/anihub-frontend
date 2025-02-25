@@ -25,6 +25,7 @@ export const actions = {
 			const user = await Auth.profile();
 			return { form, user };
 		} catch (err) {
+			console.log(err);
 			return error(400, err as Error);
 		}
 	}

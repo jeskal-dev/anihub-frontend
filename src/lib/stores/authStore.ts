@@ -17,17 +17,17 @@ const authStore = createPersistentStore<AuthStore>('auth', {
 	// },
 	user: null,
 	isAuthenticated: false
-});	
+});
 
 const login = (auth: Omit<AuthStore, 'isAuthenticated'>) => {
-	authStore.set({ ...auth, isAuthenticated: true });
+	authStore.update(() => ({ ...auth, isAuthenticated: true }));
 };
 
 const logout = () => {
-	authStore.set({
+	authStore.update(() => ({
 		user: null,
 		isAuthenticated: false
-	});
+	}));
 };
 
 export default {

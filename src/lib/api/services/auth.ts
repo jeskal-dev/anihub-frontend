@@ -11,8 +11,14 @@ export class Auth {
 		return new TokenDto(data);
 	}
 
+	static async logout(token: string) {
+		const { data } = await http.post(AUTH_ENDPOINTS.LOGOUT, { token });
+		return data;
+	}
+
 	static async register(body: RegisterSchema) {
 		const values = RegisterDto.cleanRegisterSchema(body);
+
 		const { data } = await http.post(AUTH_ENDPOINTS.REGISTER, values);
 		return data;
 	}
